@@ -3,6 +3,11 @@
 Techs and Tools
 - React (with Vite) + Typescript for web
 - Vitest + React Testing Library for unit testing
+- Husky + lint-staged for git hook (i.e. pre-commit)
+    - Type-checking with **tsc-files**
+    - Code formatting with **prettier**
+    - Ruled with **ESLint**
+
 
 ## Development
 
@@ -26,4 +31,16 @@ This project uses Vitest for unit testing. In order to run unit tests, you can r
 
 ```bash
 npm run test
+```
+
+Or Vitest UI
+
+```bash
+npm run test:ui
+```
+
+For coverage
+
+```bash
+npm run test:coverage
 ```
