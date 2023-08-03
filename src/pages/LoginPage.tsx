@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { PinInput, PinInputField } from '@chakra-ui/react';
 import { AtmScreen } from '../components/AtmScreen';
 import { AtmInput } from '../components/AtmInput';
-import { pinCheck } from '../utils/pinCheck';
+import { usePinCheck } from '../hooks/usePinCheck';
 
 export const LoginPage: React.FC = () => {
   const [pinValue, setPinValue] = useState('');
+  const { pinCheck, result: _result } = usePinCheck();
 
   const inputPressHandler = (value: string) => {
     setPinValue(value);
