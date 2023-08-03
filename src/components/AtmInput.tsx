@@ -46,82 +46,108 @@ export const AtmInput: React.FC<AtmInputProps> = ({
         <Button
           isDisabled={disableNumberInput}
           onClick={() => numberButtonPressedHandler('1')}
+          size={'lg'}
         >
           1
         </Button>
         <Button
           isDisabled={disableNumberInput}
           onClick={() => numberButtonPressedHandler('2')}
+          size={'lg'}
         >
           2
         </Button>
         <Button
           isDisabled={disableNumberInput}
           onClick={() => numberButtonPressedHandler('3')}
+          size={'lg'}
         >
           3
         </Button>
         <Button
           isDisabled={disableNumberInput}
           onClick={() => numberButtonPressedHandler('4')}
+          size={'lg'}
         >
           4
         </Button>
         <Button
           isDisabled={disableNumberInput}
           onClick={() => numberButtonPressedHandler('5')}
+          size={'lg'}
         >
           5
         </Button>
         <Button
           isDisabled={disableNumberInput}
           onClick={() => numberButtonPressedHandler('6')}
+          size={'lg'}
         >
           6
         </Button>
         <Button
           isDisabled={disableNumberInput}
           onClick={() => numberButtonPressedHandler('7')}
+          size={'lg'}
         >
           7
         </Button>
         <Button
           isDisabled={disableNumberInput}
           onClick={() => numberButtonPressedHandler('8')}
+          size={'lg'}
         >
           8
         </Button>
         <Button
           isDisabled={disableNumberInput}
           onClick={() => numberButtonPressedHandler('9')}
+          size={'lg'}
         >
           9
         </Button>
-        <Button isDisabled={true}></Button>
+        <Button
+          isDisabled={true}
+          size={'lg'}
+        ></Button>
         <Button
           isDisabled={disableNumberInput}
           onClick={() => numberButtonPressedHandler('0')}
+          size={'lg'}
         >
           0
         </Button>
-        <Button isDisabled={true}></Button>
+        <Button
+          isDisabled={true}
+          size={'lg'}
+        ></Button>
       </div>
 
       <div className="grid grid-cols-1 gap-10">
-        <Button colorScheme="red">CANCEL</Button>
+        <Button
+          colorScheme="red"
+          size={'lg'}
+        >
+          CANCEL
+        </Button>
         <Button
           colorScheme="yellow"
           onClick={clearButtonPressedHandler}
+          size={'lg'}
         >
           CLEAR
         </Button>
         <Button
           colorScheme="green"
           onClick={enterButtonPressedHandler}
+          size={'lg'}
         >
           ENTER
         </Button>
-        <Button isDisabled={true}></Button>
+        <Button
+          isDisabled={true}
+          size={'lg'}
+        ></Button>
       </div>
     </div>
   );
