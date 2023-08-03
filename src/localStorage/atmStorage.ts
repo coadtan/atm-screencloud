@@ -14,6 +14,10 @@ export const setBalance = (balance: number): void => {
   localStorage.setItem(BALANCE_STORAGE_KEY, balance.toString());
 };
 
+export const removeBalanceKey = () => {
+  localStorage.removeItem(BALANCE_STORAGE_KEY);
+};
+
 export const getAuth = (): boolean => {
   const isAuthenticated = localStorage.getItem(AUTH_STORAGE_KEY);
   if (isAuthenticated === 'true') {
@@ -25,4 +29,8 @@ export const getAuth = (): boolean => {
 
 export const setAuth = (isAuthenticated: boolean): void => {
   localStorage.setItem(AUTH_STORAGE_KEY, isAuthenticated.toString());
+};
+
+export const removeAuthKey = () => {
+  localStorage.removeItem(AUTH_STORAGE_KEY);
 };
