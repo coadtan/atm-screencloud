@@ -24,9 +24,6 @@ dist-ssr
 # typescript
 *.tsbuildinfo
 
-# local env files
-.env
-
 # Test
 coverage
 

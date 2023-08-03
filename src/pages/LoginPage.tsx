@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PinInput, PinInputField } from '@chakra-ui/react';
 import { AtmScreen } from '../components/AtmScreen';
 import { AtmInput } from '../components/AtmInput';
+import { pinCheck } from '../utils/pinCheck';
 
 export const LoginPage: React.FC = () => {
   const [pinValue, setPinValue] = useState('');
@@ -10,8 +11,8 @@ export const LoginPage: React.FC = () => {
     setPinValue(value);
   };
 
-  const enterPressHandler = (value: string) => {
-    console.log('🚀 ~ file: LoginPage.tsx:8 ~ pinValue:', value);
+  const enterPressHandler = async (value: string) => {
+    pinCheck(value);
   };
 
   return (
