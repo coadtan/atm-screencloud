@@ -10,6 +10,10 @@ const config: ThemeConfig = {
 };
 
 const theme: ThemeOverride = {
+  fonts: {
+    heading: `'Chakra Petch', sans-serif`,
+    body: `'Chakra Petch', sans-serif`,
+  },
   config,
 };
 

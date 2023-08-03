@@ -1,3 +1,5 @@
+import '@fontsource/chakra-petch';
+
 import { ChakraProvider } from '@chakra-ui/react';
 import { customTheme } from './theme';
 
