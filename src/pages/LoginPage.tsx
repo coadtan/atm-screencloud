@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PinInput, PinInputField } from '@chakra-ui/react';
 import { AtmScreenWrapper } from '../components/AtmScreenWrapper';
 import { AtmInputWrapper } from '../components/AtmInputWrapper';
@@ -13,8 +13,17 @@ export const LoginPage: React.FC = () => {
   useCheckAuth();
 
   const [pinValue, setPinValue] = useState('');
+  const [disableNumberInput, setDisableNumberInput] = useState(false);
   const { pinCheck, pinCheckState, reset } = usePinCheck();
   const navigate = useNavigate({ from: '/' });
+
+  useEffect(() => {
+    if (pinValue.length >= 4) {
+      setDisableNumberInput(true);
+    } else {
+      setDisableNumberInput(false);
+    }
+  }, [pinValue]);
 
   const inputPressHandler = (value: string) => {
     setPinValue((prev) => prev.concat(value));
@@ -63,7 +72,10 @@ export const LoginPage: React.FC = () => {
         </div>
       </AtmScreenWrapper>
       <AtmInputWrapper>
-        <AtmNumberInput onNumberInputPress={inputPressHandler} />
+        <AtmNumberInput
+          onNumberInputPress={inputPressHandler}
+          isDisabled={disableNumberInput}
+        />
         <AtmActionInput
           onEnterPress={enterPressHandler}
           onClearPress={clearPressHandler}
