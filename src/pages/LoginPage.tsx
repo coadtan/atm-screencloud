@@ -8,14 +8,22 @@ import { AtmActionInput } from '../components/AtmActionInput';
 
 export const LoginPage: React.FC = () => {
   const [pinValue, setPinValue] = useState('');
-  const { pinCheck, result, reset } = usePinCheck();
+  const { pinCheck, pinCheckState, reset } = usePinCheck();
 
   const inputPressHandler = (value: string) => {
     setPinValue((prev) => prev.concat(value));
   };
 
   const enterPressHandler = async () => {
-    pinCheck(pinValue);
+    const result = await pinCheck(pinValue);
+
+    const currentBalance = result?.currentBalance;
+    if (currentBalance) {
+      console.log(
+        '🚀 ~ file: LoginPage.tsx:22 ~ enterPressHandler ~ currentBalance:',
+        currentBalance,
+      );
+    }
   };
 
   const clearPressHandler = () => {
@@ -44,7 +52,7 @@ export const LoginPage: React.FC = () => {
             </PinInput>
           </div>
 
-          {result === 'error' ? (
+          {pinCheckState === 'error' ? (
             <div className="mt-4 bg-red-300 p-2">Incorrect PIN.</div>
           ) : null}
         </div>
@@ -55,7 +63,7 @@ export const LoginPage: React.FC = () => {
           onEnterPress={enterPressHandler}
           onClearPress={clearPressHandler}
           hideCancel={true}
-          enterLoading={result === 'loading'}
+          enterLoading={pinCheckState === 'loading'}
         />
       </AtmInputWrapper>
     </>

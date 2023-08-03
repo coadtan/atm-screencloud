@@ -6,22 +6,22 @@ type PinCheckResponse = {
   currentBalance: number;
 };
 
-type PinCheckState = 'idle' | 'loading' | 'error' | PinCheckResponse;
+type PinCheckState = 'idle' | 'loading' | 'error' | 'success';
 
 export const usePinCheck = () => {
-  const [result, setResult] = useState<PinCheckState>('idle');
+  const [pinCheckState, setPinCheckState] = useState<PinCheckState>('idle');
 
   const reset = () => {
-    setResult('idle');
+    setPinCheckState('idle');
   };
 
-  const pinCheck = async (pin: string) => {
+  const pinCheck = async (pin: string): Promise<PinCheckResponse | void> => {
     if (pin.length != 4) {
-      setResult('error');
+      setPinCheckState('error');
       return;
     }
 
-    setResult('loading');
+    setPinCheckState('loading');
 
     try {
       const res = await axios.post<PinCheckResponse>(
@@ -37,9 +37,10 @@ export const usePinCheck = () => {
         },
       );
 
-      setResult(res.data);
+      setPinCheckState('success');
+      return res.data;
     } catch (error) {
-      setResult('error');
+      setPinCheckState('error');
       if (!axios.isAxiosError(error)) {
         console.error('pinCheck ~ error:', error);
       }
@@ -47,7 +48,7 @@ export const usePinCheck = () => {
   };
 
   return {
-    result,
+    pinCheckState,
     pinCheck,
     reset,
   };
