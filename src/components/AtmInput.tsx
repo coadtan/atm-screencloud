@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react';
 
 type AtmInputProps = {
   onNumberInputPress: (currentInput: string) => void;
+  onEnterPress?: (currentInput: string) => void;
   maxInput?: number;
 };
 
 export const AtmInput: React.FC<AtmInputProps> = ({
   onNumberInputPress,
+  onEnterPress,
   maxInput = 15,
 }) => {
   const [currentInput, setCurrentInput] = useState('');
@@ -15,6 +17,12 @@ export const AtmInput: React.FC<AtmInputProps> = ({
 
   const numberButtonPressedHandler = (numberPressed: string) => {
     setCurrentInput((prev) => prev.concat(numberPressed));
+  };
+
+  const enterButtonPressedHandler = () => {
+    if (onEnterPress) {
+      onEnterPress(currentInput);
+    }
   };
 
   const clearButtonPressedHandler = () => {
@@ -107,7 +115,12 @@ export const AtmInput: React.FC<AtmInputProps> = ({
         >
           CLEAR
         </Button>
-        <Button colorScheme="green">ENTER</Button>
+        <Button
+          colorScheme="green"
+          onClick={enterButtonPressedHandler}
+        >
+          ENTER
+        </Button>
         <Button isDisabled={true}></Button>
       </div>
     </div>

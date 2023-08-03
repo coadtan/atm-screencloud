@@ -5,10 +5,13 @@ import { AtmInput } from '../components/AtmInput';
 
 export const LoginPage: React.FC = () => {
   const [pinValue, setPinValue] = useState('');
-  console.log('🚀 ~ file: LoginPage.tsx:8 ~ pinValue:', pinValue);
 
   const inputPressHandler = (value: string) => {
     setPinValue(value);
+  };
+
+  const enterPressHandler = (value: string) => {
+    console.log('🚀 ~ file: LoginPage.tsx:8 ~ pinValue:', value);
   };
 
   return (
@@ -35,6 +38,7 @@ export const LoginPage: React.FC = () => {
       </AtmScreen>
       <AtmInput
         onNumberInputPress={inputPressHandler}
+        onEnterPress={enterPressHandler}
         maxInput={4}
       />
     </>
