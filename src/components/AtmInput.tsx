@@ -4,13 +4,21 @@ import { useEffect, useState } from 'react';
 type AtmInputProps = {
   onNumberInputPress: (currentInput: string) => void;
   onEnterPress?: (currentInput: string) => void;
+  onClearPress?: () => void;
+  onCancelPress?: () => void;
   maxInput?: number;
+  hideCancel?: boolean;
+  enterLoading?: boolean;
 };
 
 export const AtmInput: React.FC<AtmInputProps> = ({
   onNumberInputPress,
   onEnterPress,
+  onClearPress,
+  onCancelPress,
   maxInput = 15,
+  hideCancel = false,
+  enterLoading = false,
 }) => {
   const [currentInput, setCurrentInput] = useState('');
   const [disableNumberInput, setDisableNumberInput] = useState(false);
@@ -27,6 +35,15 @@ export const AtmInput: React.FC<AtmInputProps> = ({
 
   const clearButtonPressedHandler = () => {
     setCurrentInput('');
+    if (onClearPress) {
+      onClearPress();
+    }
+  };
+
+  const cancelButtonPressedHandler = () => {
+    if (onCancelPress) {
+      onCancelPress();
+    }
   };
 
   useEffect(() => {
@@ -124,12 +141,20 @@ export const AtmInput: React.FC<AtmInputProps> = ({
       </div>
 
       <div className="grid grid-cols-1 gap-10">
-        <Button
-          colorScheme="red"
-          size={'lg'}
-        >
-          CANCEL
-        </Button>
+        {hideCancel ? (
+          <Button
+            isDisabled={true}
+            size={'lg'}
+          ></Button>
+        ) : (
+          <Button
+            colorScheme="red"
+            onClick={cancelButtonPressedHandler}
+            size={'lg'}
+          >
+            CANCEL
+          </Button>
+        )}
         <Button
           colorScheme="yellow"
           onClick={clearButtonPressedHandler}
@@ -141,6 +166,7 @@ export const AtmInput: React.FC<AtmInputProps> = ({
           colorScheme="green"
           onClick={enterButtonPressedHandler}
           size={'lg'}
+          isLoading={enterLoading}
         >
           ENTER
         </Button>

@@ -11,7 +11,16 @@ type PinCheckState = 'idle' | 'loading' | 'error' | PinCheckResponse;
 export const usePinCheck = () => {
   const [result, setResult] = useState<PinCheckState>('idle');
 
+  const reset = () => {
+    setResult('idle');
+  };
+
   const pinCheck = async (pin: string) => {
+    if (pin.length != 4) {
+      setResult('error');
+      return;
+    }
+
     setResult('loading');
 
     try {
@@ -31,9 +40,7 @@ export const usePinCheck = () => {
       setResult(res.data);
     } catch (error) {
       setResult('error');
-      if (axios.isAxiosError(error)) {
-        console.error('pinCheck ~ axios error:', error.response?.data.error);
-      } else {
+      if (!axios.isAxiosError(error)) {
         console.error('pinCheck ~ error:', error);
       }
     }
@@ -42,5 +49,6 @@ export const usePinCheck = () => {
   return {
     result,
     pinCheck,
+    reset,
   };
 };

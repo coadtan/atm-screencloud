@@ -6,7 +6,7 @@ import { usePinCheck } from '../hooks/usePinCheck';
 
 export const LoginPage: React.FC = () => {
   const [pinValue, setPinValue] = useState('');
-  const { pinCheck, result: _result } = usePinCheck();
+  const { pinCheck, result, reset } = usePinCheck();
 
   const inputPressHandler = (value: string) => {
     setPinValue(value);
@@ -14,6 +14,10 @@ export const LoginPage: React.FC = () => {
 
   const enterPressHandler = async (value: string) => {
     pinCheck(value);
+  };
+
+  const clearPressHandler = () => {
+    reset();
   };
 
   return (
@@ -30,18 +34,25 @@ export const LoginPage: React.FC = () => {
               value={pinValue}
               manageFocus={false}
             >
-              <PinInputField />
-              <PinInputField />
-              <PinInputField />
-              <PinInputField />
+              <PinInputField readOnly />
+              <PinInputField readOnly />
+              <PinInputField readOnly />
+              <PinInputField readOnly />
             </PinInput>
           </div>
+
+          {result === 'error' ? (
+            <div className="mt-4 bg-red-300 p-2">Incorrect PIN.</div>
+          ) : null}
         </div>
       </AtmScreen>
       <AtmInput
         onNumberInputPress={inputPressHandler}
         onEnterPress={enterPressHandler}
+        onClearPress={clearPressHandler}
         maxInput={4}
+        hideCancel={true}
+        enterLoading={result === 'loading'}
       />
     </>
   );
