@@ -1,13 +1,16 @@
-import { Link, Outlet } from '@tanstack/router';
+import { Outlet } from '@tanstack/router';
+import { AtmInput } from '../components/AtmInput';
+import { AtmScreen } from '../components/AtmScreen';
 
 export const RootLayout: React.FC = () => {
   return (
     <>
-      <div>
-        <Link to="/">Home</Link> <Link to="/atm">ATM</Link>
+      <div className="m-16 mx-auto flex w-fit flex-col gap-16">
+        <AtmScreen>
+          <Outlet />
+        </AtmScreen>
+        <AtmInput />
       </div>
-      <hr />
-      <Outlet />
     </>
   );
 };
