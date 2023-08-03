@@ -2,12 +2,14 @@ import '@fontsource/chakra-petch';
 import './styles/globals.css';
 
 import { ChakraProvider } from '@chakra-ui/react';
+import { RouterProvider } from '@tanstack/router';
 import { customTheme } from './theme';
+import { router } from './router';
 
 function App() {
   return (
     <ChakraProvider theme={customTheme}>
-      <h1>Hello World</h1>
+      <RouterProvider router={router} />
     </ChakraProvider>
   );
 }
