@@ -1,31 +1,101 @@
 import { Button } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export const AtmInput: React.FC = () => {
-  const [_currentValue, setCurrentValue] = useState('');
+type AtmInputProps = {
+  onNumberInputPress: (currentInput: string) => void;
+  maxInput?: number;
+};
+
+export const AtmInput: React.FC<AtmInputProps> = ({
+  onNumberInputPress,
+  maxInput = 15,
+}) => {
+  const [currentInput, setCurrentInput] = useState('');
+  const [disableNumberInput, setDisableNumberInput] = useState(false);
 
   const numberButtonPressedHandler = (numberPressed: string) => {
-    setCurrentValue((prev) => prev.concat(numberPressed));
+    setCurrentInput((prev) => prev.concat(numberPressed));
   };
 
   const clearButtonPressedHandler = () => {
-    setCurrentValue('');
+    setCurrentInput('');
   };
+
+  useEffect(() => {
+    if (onNumberInputPress) {
+      onNumberInputPress(currentInput);
+      if (currentInput.length >= maxInput) {
+        setDisableNumberInput(true);
+      } else {
+        setDisableNumberInput(false);
+      }
+    }
+  }, [currentInput, maxInput, onNumberInputPress]);
 
   return (
     <div className="flex flex-row gap-12">
       <div className="grid grid-cols-3 gap-10">
-        <Button onClick={() => numberButtonPressedHandler('1')}>1</Button>
-        <Button onClick={() => numberButtonPressedHandler('2')}>2</Button>
-        <Button onClick={() => numberButtonPressedHandler('3')}>3</Button>
-        <Button onClick={() => numberButtonPressedHandler('4')}>4</Button>
-        <Button onClick={() => numberButtonPressedHandler('5')}>5</Button>
-        <Button onClick={() => numberButtonPressedHandler('6')}>6</Button>
-        <Button onClick={() => numberButtonPressedHandler('7')}>7</Button>
-        <Button onClick={() => numberButtonPressedHandler('8')}>8</Button>
-        <Button onClick={() => numberButtonPressedHandler('9')}>9</Button>
+        <Button
+          isDisabled={disableNumberInput}
+          onClick={() => numberButtonPressedHandler('1')}
+        >
+          1
+        </Button>
+        <Button
+          isDisabled={disableNumberInput}
+          onClick={() => numberButtonPressedHandler('2')}
+        >
+          2
+        </Button>
+        <Button
+          isDisabled={disableNumberInput}
+          onClick={() => numberButtonPressedHandler('3')}
+        >
+          3
+        </Button>
+        <Button
+          isDisabled={disableNumberInput}
+          onClick={() => numberButtonPressedHandler('4')}
+        >
+          4
+        </Button>
+        <Button
+          isDisabled={disableNumberInput}
+          onClick={() => numberButtonPressedHandler('5')}
+        >
+          5
+        </Button>
+        <Button
+          isDisabled={disableNumberInput}
+          onClick={() => numberButtonPressedHandler('6')}
+        >
+          6
+        </Button>
+        <Button
+          isDisabled={disableNumberInput}
+          onClick={() => numberButtonPressedHandler('7')}
+        >
+          7
+        </Button>
+        <Button
+          isDisabled={disableNumberInput}
+          onClick={() => numberButtonPressedHandler('8')}
+        >
+          8
+        </Button>
+        <Button
+          isDisabled={disableNumberInput}
+          onClick={() => numberButtonPressedHandler('9')}
+        >
+          9
+        </Button>
         <Button isDisabled={true}></Button>
-        <Button onClick={() => numberButtonPressedHandler('0')}>0</Button>
+        <Button
+          isDisabled={disableNumberInput}
+          onClick={() => numberButtonPressedHandler('0')}
+        >
+          0
+        </Button>
         <Button isDisabled={true}></Button>
       </div>
 

@@ -1,9 +1,12 @@
 import React from 'react';
+import { AtmScreen } from '../components/AtmScreen';
 
 export const AtmPage: React.FC = () => {
   return (
     <>
-      <div>AtmPage</div>
+      <AtmScreen>
+        <div>AtmPage</div>
+      </AtmScreen>
     </>
   );
 };
