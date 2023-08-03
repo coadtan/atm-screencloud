@@ -1,28 +1,31 @@
 import React, { useState } from 'react';
 import { PinInput, PinInputField } from '@chakra-ui/react';
-import { AtmScreen } from '../components/AtmScreen';
-import { AtmInput } from '../components/AtmInput';
+import { AtmScreenWrapper } from '../components/AtmScreenWrapper';
+import { AtmInputWrapper } from '../components/AtmInputWrapper';
 import { usePinCheck } from '../hooks/usePinCheck';
+import { AtmNumberInput } from '../components/AtmNumberInput';
+import { AtmActionInput } from '../components/AtmActionInput';
 
 export const LoginPage: React.FC = () => {
   const [pinValue, setPinValue] = useState('');
   const { pinCheck, result, reset } = usePinCheck();
 
   const inputPressHandler = (value: string) => {
-    setPinValue(value);
+    setPinValue((prev) => prev.concat(value));
   };
 
-  const enterPressHandler = async (value: string) => {
-    pinCheck(value);
+  const enterPressHandler = async () => {
+    pinCheck(pinValue);
   };
 
   const clearPressHandler = () => {
+    setPinValue('');
     reset();
   };
 
   return (
     <>
-      <AtmScreen>
+      <AtmScreenWrapper>
         <div>
           <div>Welcome to ABC Bank</div>
           <div>Enter Your Pin</div>
@@ -45,15 +48,16 @@ export const LoginPage: React.FC = () => {
             <div className="mt-4 bg-red-300 p-2">Incorrect PIN.</div>
           ) : null}
         </div>
-      </AtmScreen>
-      <AtmInput
-        onNumberInputPress={inputPressHandler}
-        onEnterPress={enterPressHandler}
-        onClearPress={clearPressHandler}
-        maxInput={4}
-        hideCancel={true}
-        enterLoading={result === 'loading'}
-      />
+      </AtmScreenWrapper>
+      <AtmInputWrapper>
+        <AtmNumberInput onNumberInputPress={inputPressHandler} />
+        <AtmActionInput
+          onEnterPress={enterPressHandler}
+          onClearPress={clearPressHandler}
+          hideCancel={true}
+          enterLoading={result === 'loading'}
+        />
+      </AtmInputWrapper>
     </>
   );
 };

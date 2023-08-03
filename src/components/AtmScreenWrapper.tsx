@@ -1,9 +1,11 @@
 import React, { type ReactElement } from 'react';
 
-type AtmScreenProps = {
+type AtmScreenWrapperProps = {
   children: ReactElement;
 };
 
-export const AtmScreen: React.FC<AtmScreenProps> = ({ children }) => {
+export const AtmScreenWrapper: React.FC<AtmScreenWrapperProps> = ({
+  children,
+}) => {
   return <div className="h-80 border p-2">{children}</div>;
 };
