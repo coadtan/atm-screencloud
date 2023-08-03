@@ -1,0 +1,22 @@
+{
+  "recommendations": [
+    "eamodio.gitlens",
+    "akamud.vscode-theme-onedark",
+    "formulahendry.auto-rename-tag",
+    "streetsidesoftware.code-spell-checker",
+    "naumovs.color-highlight",
+    "dsznajder.es7-react-js-snippets",
+    "dbaeumer.vscode-eslint",
+    "vincaslt.highlight-matching-tag",
+    "shd101wyy.markdown-preview-enhanced",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "chakrounanas.turbo-console-log",
+    "vscode-icons-team.vscode-icons",
+    "antiantisepticeye.vscode-color-picker",
+    "mhutchie.git-graph",
+    "yzhang.markdown-all-in-one"
+  ]
+}
