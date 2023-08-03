@@ -5,6 +5,7 @@ import { AtmInputWrapper } from '../components/AtmInputWrapper';
 import { usePinCheck } from '../hooks/usePinCheck';
 import { AtmNumberInput } from '../components/AtmNumberInput';
 import { AtmActionInput } from '../components/AtmActionInput';
+import { setAuth, setBalance } from '../localStorage/atmStorage';
 
 export const LoginPage: React.FC = () => {
   const [pinValue, setPinValue] = useState('');
@@ -19,10 +20,8 @@ export const LoginPage: React.FC = () => {
 
     const currentBalance = result?.currentBalance;
     if (currentBalance) {
-      console.log(
-        '🚀 ~ file: LoginPage.tsx:22 ~ enterPressHandler ~ currentBalance:',
-        currentBalance,
-      );
+      setAuth(true);
+      setBalance(currentBalance);
     }
   };
 
