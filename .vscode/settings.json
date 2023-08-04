@@ -7,5 +7,5 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["Chakra", "tanstack"]
+  "cSpell.words": ["Chakra", "tanstack", "zustand"]
 }

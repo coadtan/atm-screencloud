@@ -1,15 +1,17 @@
 import { Button, Tooltip } from '@chakra-ui/react';
 import React from 'react';
-import { removeAuthKey, removeBalanceKey } from '../localStorage/atmStorage';
+import { removeAuthKey } from '../localStorage/atmStorage';
 import { useNavigate } from '@tanstack/router';
+import { useBalanceStore } from '../stores/balanceStore';
 
 export const ResetEverything: React.FC = () => {
   const navigate = useNavigate();
+  const resetBalance = useBalanceStore((state) => state.reset);
 
   const resetHandler = () => {
     removeAuthKey();
-    removeBalanceKey();
     navigate({ to: '/' });
+    resetBalance();
   };
 
   return (

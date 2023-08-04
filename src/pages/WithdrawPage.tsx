@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { AtmScreenWrapper } from '../components/AtmScreenWrapper';
 import { AtmInputWrapper } from '../components/AtmInputWrapper';
 import { AtmNumberInput } from '../components/AtmNumberInput';
 import { AtmActionInput } from '../components/AtmActionInput';
 import { useCheckAuth } from '../hooks/useCheckAuth';
-import { getBalance } from '../localStorage/atmStorage';
+import { useBalanceStore } from '../stores/balanceStore';
 
 export const WithdrawPage: React.FC = () => {
   useCheckAuth();
-  const [currentBalance, setCurrentBalance] = useState(0);
   const [withdrawalAmount, setWithdrawalAmount] = useState('');
-
-  useEffect(() => {
-    const balanceLocalStorage = getBalance();
-    if (balanceLocalStorage) {
-      setCurrentBalance(balanceLocalStorage);
-    }
-  }, []);
+  const currentBalance = useBalanceStore((state) => state.currentBalance);
+  const withdraw = useBalanceStore((state) => state.withdraw);
+  const [displayMessage, setDisplayMessage] = useState<
+    'not-show' | 'overdraft' | 'non-withdrawable'
+  >('not-show');
 
   const numberInputPressHandler = (value: string) => {
+    setDisplayMessage('not-show');
+
     setWithdrawalAmount((prev) => prev.concat(value));
   };
 
@@ -27,17 +26,22 @@ export const WithdrawPage: React.FC = () => {
   };
 
   const enterInputPressHandler = () => {
-    const userBalance = getBalance();
+    const withdrawalAmountNumber = Number(withdrawalAmount);
 
-    if (userBalance) {
-      const withdrawalAmountNumber = Number(withdrawalAmount);
+    if (withdrawalAmountNumber > currentBalance) {
+      const isOverdrawn = withdrawalAmountNumber - currentBalance <= 100;
 
-      if (withdrawalAmountNumber) {
-        // TODO handle withdraw logic
+      if (isOverdrawn) {
+        withdraw(withdrawalAmountNumber);
+        setDisplayMessage('overdraft');
+      } else {
+        setDisplayMessage('non-withdrawable');
       }
     } else {
-      // TODO error
+      withdraw(withdrawalAmountNumber);
     }
+
+    setWithdrawalAmount('');
   };
 
   const formatter = new Intl.NumberFormat('en-GB', {
@@ -58,6 +62,16 @@ export const WithdrawPage: React.FC = () => {
           <p className="mx-auto w-2/4 border p-4 text-center">
             {formatter.format(Number(withdrawalAmount))}
           </p>
+          {displayMessage === 'non-withdrawable' ? (
+            <div className="mt-4 bg-red-300 p-2 text-center">
+              <p>Your overdraft limit has been exceeded.</p>
+            </div>
+          ) : null}
+          {displayMessage === 'overdraft' ? (
+            <div className="mt-4 bg-yellow-300 p-2 text-center">
+              <p>You go overdrawn.</p>
+            </div>
+          ) : null}
         </div>
       </AtmScreenWrapper>
       <AtmInputWrapper>

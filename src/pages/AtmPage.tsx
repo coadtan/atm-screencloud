@@ -1,25 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AtmScreenWrapper } from '../components/AtmScreenWrapper';
 import { AtmInputWrapper } from '../components/AtmInputWrapper';
 import { AtmNumberInput } from '../components/AtmNumberInput';
 import { AtmActionInput } from '../components/AtmActionInput';
 import { useCheckAuth } from '../hooks/useCheckAuth';
-import { getBalance } from '../localStorage/atmStorage';
 import { Button } from '@chakra-ui/react';
 import { useNavigate } from '@tanstack/router';
+import { useBalanceStore } from '../stores/balanceStore';
 
 export const AtmPage: React.FC = () => {
   useCheckAuth();
   const navigate = useNavigate();
-
-  const [currentBalance, setCurrentBalance] = useState(0);
-
-  useEffect(() => {
-    const balanceLocalStorage = getBalance();
-    if (balanceLocalStorage) {
-      setCurrentBalance(balanceLocalStorage);
-    }
-  }, []);
+  const currentBalance = useBalanceStore((state) => state.currentBalance);
 
   const inputPressHandler = (_value: string) => {};
 
