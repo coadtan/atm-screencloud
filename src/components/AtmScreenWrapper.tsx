@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 
 type AtmScreenWrapperProps = {
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
 };
 
 export const AtmScreenWrapper: React.FC<AtmScreenWrapperProps> = ({
