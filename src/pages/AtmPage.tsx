@@ -6,9 +6,12 @@ import { AtmActionInput } from '../components/AtmActionInput';
 import { useCheckAuth } from '../hooks/useCheckAuth';
 import { getBalance } from '../localStorage/atmStorage';
 import { Button } from '@chakra-ui/react';
+import { useNavigate } from '@tanstack/router';
 
 export const AtmPage: React.FC = () => {
   useCheckAuth();
+  const navigate = useNavigate();
+
   const [currentBalance, setCurrentBalance] = useState(0);
 
   useEffect(() => {
@@ -20,6 +23,10 @@ export const AtmPage: React.FC = () => {
 
   const inputPressHandler = (_value: string) => {};
 
+  const goToWithDraw = () => {
+    navigate({ to: '/withdraw' });
+  };
+
   return (
     <>
       <AtmScreenWrapper>
@@ -29,7 +36,7 @@ export const AtmPage: React.FC = () => {
             <p>your balance: {currentBalance}</p>
           </div>
           <div className="flex w-1/4 flex-col gap-8">
-            <Button>Withdraw</Button>
+            <Button onClick={goToWithDraw}>Withdraw</Button>
             <Button>History</Button>
           </div>
         </div>
