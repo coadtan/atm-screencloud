@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { type NoteNumberType, useNoteStore } from '../stores/noteStore';
 import { useBalanceStore } from '../stores/balanceStore';
 import { calculateNotes } from '../utils/calculateNotes';
+import { useTransactionStore } from '../stores/transactionStore';
 
 export type WithdrawStatusType =
   | 'not-show'
@@ -20,11 +21,13 @@ type UseWithdrawReturnType = {
 export const useWithdraw = (): UseWithdrawReturnType => {
   const withdrawFromATM = useBalanceStore((state) => state.withdraw);
   const currentBalance = useBalanceStore((state) => state.currentBalance);
+  const getCurrentBalance = useBalanceStore((state) => state.getCurrentBalance);
   const noteInATM = useNoteStore((state) => state.noteNumber);
   const decreaseNoteNumber = useNoteStore((state) => state.decreaseNoteNumber);
   const getRemainingAtmBalance = useNoteStore(
     (state) => state.getRemainingAtmBalance,
   );
+  const addTransaction = useTransactionStore((state) => state.addTransaction);
 
   const [withdrawStatus, setWithdrawStatus] =
     useState<WithdrawStatusType>('not-show');
@@ -46,6 +49,13 @@ export const useWithdraw = (): UseWithdrawReturnType => {
 
     decreaseNoteNumber(noteUsed);
     withdrawFromATM(amount);
+
+    addTransaction({
+      isInitBalance: false,
+      when: new Date(),
+      amount: amount,
+      balance: getCurrentBalance(),
+    });
 
     return noteUsed;
   };
