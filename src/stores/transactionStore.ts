@@ -11,6 +11,7 @@ interface TransactionState {
   transactionList: TransactionType[];
   initTransaction: (balance: number) => void;
   addTransaction: (newTransaction: TransactionType) => void;
+  resetTransaction: () => void;
 }
 
 export const useTransactionStore = create<TransactionState>()((set) => ({
@@ -24,5 +25,9 @@ export const useTransactionStore = create<TransactionState>()((set) => ({
   addTransaction: (newTransaction: TransactionType) =>
     set((state) => ({
       transactionList: [...state.transactionList, newTransaction],
+    })),
+  resetTransaction: () =>
+    set(() => ({
+      transactionList: [],
     })),
 }));
