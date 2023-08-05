@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type NoteNumberType = {
+export type NoteNumberType = {
   fiveEuroNum: number;
   tenEuroNum: number;
   twentyEuroNum: number;
@@ -9,7 +9,7 @@ type NoteNumberType = {
 interface NoteState {
   noteNumber: NoteNumberType;
   resetNotes: () => void;
-  updateNoteNumber: (newNoteNumber: NoteNumberType) => void;
+  decreaseNoteNumber: (newNoteNumber: NoteNumberType) => void;
   getRemainingAtmBalance: () => number;
 }
 
@@ -25,8 +25,14 @@ export const useNoteStore = create<NoteState>()((set, get) => ({
     set(() => ({
       noteNumber: initialState,
     })),
-  updateNoteNumber: (newNoteNumber) =>
-    set(() => ({ noteNumber: newNoteNumber })),
+  decreaseNoteNumber: (noteUsed) =>
+    set(() => ({
+      noteNumber: {
+        fiveEuroNum: get().noteNumber.fiveEuroNum - noteUsed.fiveEuroNum,
+        tenEuroNum: get().noteNumber.tenEuroNum - noteUsed.tenEuroNum,
+        twentyEuroNum: get().noteNumber.twentyEuroNum - noteUsed.twentyEuroNum,
+      },
+    })),
   getRemainingAtmBalance: () => {
     const { fiveEuroNum, tenEuroNum, twentyEuroNum } = get().noteNumber;
     return fiveEuroNum * 5 + tenEuroNum * 10 + twentyEuroNum * 20;

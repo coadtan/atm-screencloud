@@ -13,8 +13,10 @@ import { WithdrawStatusType, useWithdraw } from '../hooks/useWithdraw';
 const displayMessageText: Record<WithdrawStatusType, string> = {
   'not-show': '',
   'insufficient-withdraw-limit': 'Your overdraft limit has been exceeded.',
-  'insufficient-atm-balance': 'sorry the atm has insufficient funds.',
+  'insufficient-atm-balance': 'The atm has insufficient cash.',
   overdraft: 'You go overdrawn.',
+  'available-notes-not-matched':
+    'Cannot withdraw the exact amount with available notes.',
 };
 
 export const WithdrawPage: React.FC = () => {
@@ -61,6 +63,8 @@ export const WithdrawPage: React.FC = () => {
                 withdrawStatus === 'insufficient-withdraw-limit' &&
                   'bg-red-300',
                 withdrawStatus === 'insufficient-atm-balance' && 'bg-red-400',
+                withdrawStatus === 'available-notes-not-matched' &&
+                  'bg-red-400',
                 withdrawStatus === 'overdraft' && 'bg-yellow-300',
               )}
             >
