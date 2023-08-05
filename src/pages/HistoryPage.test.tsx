@@ -5,10 +5,6 @@ vi.mock('@tanstack/router');
 vi.mock('../hooks/useCheckAuth');
 
 describe(HistoryPage, () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   test('should display "Your transaction history"', () => {
     const view = render(<HistoryPage />);
 

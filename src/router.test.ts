@@ -5,10 +5,6 @@ import { WithdrawPage } from './pages/WithdrawPage';
 import { HistoryPage } from './pages/HistoryPage';
 
 describe('router', () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   test('should return LoginPage for "/" path', () => {
     const path = '/';
 

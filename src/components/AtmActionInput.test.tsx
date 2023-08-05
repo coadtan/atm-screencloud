@@ -1,34 +1,38 @@
-import { fireEvent, render } from '@testing-library/react';
 import { AtmActionInput } from './AtmActionInput';
+import { render } from '../utils/tests/test-utils';
+import userEvent from '@testing-library/user-event';
 
 describe(AtmActionInput, () => {
   describe('event handler', () => {
-    test('should call onEnterPress props when press "Enter"', () => {
+    test('should call onEnterPress props when press "Enter"', async () => {
+      const user = userEvent.setup();
       const mockedFn = vi.fn();
 
       const view = render(<AtmActionInput onEnterPress={mockedFn} />);
 
-      fireEvent.click(view.getByText(/ENTER/i));
+      await user.click(view.getByText(/ENTER/i));
 
       expect(mockedFn).toBeCalledTimes(1);
     });
 
-    test('should call onClearPress props when press "CLEAR"', () => {
+    test('should call onClearPress props when press "CLEAR"', async () => {
+      const user = userEvent.setup();
       const mockedFn = vi.fn();
 
       const view = render(<AtmActionInput onClearPress={mockedFn} />);
 
-      fireEvent.click(view.getByText(/CLEAR/i));
+      await user.click(view.getByText(/CLEAR/i));
 
       expect(mockedFn).toBeCalledTimes(1);
     });
 
-    test('should call onCancelPress props when press "CANCEL"', () => {
+    test('should call onCancelPress props when press "CANCEL"', async () => {
+      const user = userEvent.setup();
       const mockedFn = vi.fn();
 
       const view = render(<AtmActionInput onCancelPress={mockedFn} />);
 
-      fireEvent.click(view.getByText(/CANCEL/i));
+      await user.click(view.getByText(/CANCEL/i));
 
       expect(mockedFn).toBeCalledTimes(1);
     });

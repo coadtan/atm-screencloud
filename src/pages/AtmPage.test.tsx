@@ -6,10 +6,6 @@ vi.mock('@tanstack/router');
 vi.mock('../hooks/useCheckAuth');
 
 describe(AtmPage, () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   test('should display Withdraw', () => {
     const view = render(<AtmPage />);
 
