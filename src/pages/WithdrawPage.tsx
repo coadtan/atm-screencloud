@@ -21,6 +21,7 @@ const displayMessageText: Record<WithdrawStatusType, string> = {
 
 export const WithdrawPage: React.FC = () => {
   useCheckAuth();
+
   const [withdrawalAmount, setWithdrawalAmount] = useState('');
   const currentBalance = useBalanceStore((state) => state.currentBalance);
 
