@@ -15,10 +15,12 @@ export const AtmPage: React.FC = () => {
   const navigate = useNavigate();
   const resetScenario = useResetScenario();
 
-  const inputPressHandler = (_value: string) => {};
-
   const goToWithDraw = () => {
     navigate({ to: '/withdraw' });
+  };
+
+  const goToHistory = () => {
+    navigate({ to: '/history' });
   };
 
   const cancelInputPressHandler = () => {
@@ -43,6 +45,7 @@ export const AtmPage: React.FC = () => {
             <Button
               leftIcon={<IconHistory />}
               variant={'outline'}
+              onClick={goToHistory}
             >
               History
             </Button>
@@ -51,7 +54,7 @@ export const AtmPage: React.FC = () => {
       </AtmScreenWrapper>
       <AtmInputWrapper>
         <AtmNumberInput
-          onNumberInputPress={inputPressHandler}
+          onNumberInputPress={() => {}}
           isDisabled
         />
         <AtmActionInput

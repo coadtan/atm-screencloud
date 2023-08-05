@@ -4,6 +4,7 @@ import { RootLayout } from './layout/RootLayout';
 import { LoginPage } from './pages/LoginPage';
 import { AtmPage } from './pages/AtmPage';
 import { WithdrawPage } from './pages/WithdrawPage';
+import { HistoryPage } from './pages/HistoryPage';
 
 const rootRoute = new RootRoute({
   component: RootLayout,
@@ -21,13 +22,24 @@ const atmRoute = new Route({
   component: AtmPage,
 });
 
-const withDrawRoute = new Route({
+const withdrawRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/withdraw',
   component: WithdrawPage,
 });
 
-const routeTree = rootRoute.addChildren([atmRoute, loginRoute, withDrawRoute]);
+const historyRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/history',
+  component: HistoryPage,
+});
+
+const routeTree = rootRoute.addChildren([
+  atmRoute,
+  loginRoute,
+  withdrawRoute,
+  historyRoute,
+]);
 
 export const router = new Router({ routeTree });
 
