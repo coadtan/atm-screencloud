@@ -5,10 +5,10 @@ import { AtmInputWrapper } from '../components/AtmInputWrapper';
 import { usePinCheck } from '../hooks/usePinCheck';
 import { AtmNumberInput } from '../components/AtmNumberInput';
 import { AtmActionInput } from '../components/AtmActionInput';
-import { setAuth } from '../localStorage/atmStorage';
 import { useNavigate } from '@tanstack/router';
 import { useCheckAuth } from '../hooks/useCheckAuth';
 import { useBalanceStore } from '../stores/balanceStore';
+import { useAuthStore } from '../stores/authStore';
 
 export const LoginPage: React.FC = () => {
   useCheckAuth();
@@ -18,6 +18,7 @@ export const LoginPage: React.FC = () => {
   const { pinCheck, pinCheckState, reset } = usePinCheck();
   const navigate = useNavigate({ from: '/' });
   const initBalance = useBalanceStore((state) => state.init);
+  const authenticated = useAuthStore((state) => state.authenticated);
 
   useEffect(() => {
     if (pinValue.length >= 4) {
@@ -36,7 +37,7 @@ export const LoginPage: React.FC = () => {
 
     const currentBalance = result?.currentBalance;
     if (currentBalance) {
-      setAuth(true);
+      authenticated();
       initBalance(currentBalance);
       navigate({ to: '/atm' });
     }
