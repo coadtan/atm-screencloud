@@ -8,9 +8,12 @@ import { AtmActionInput } from '../components/AtmActionInput';
 import { useCheckAuth } from '../hooks/useCheckAuth';
 import { useBalanceStore } from '../stores/balanceStore';
 import { euroFormatter } from '../utils/euroFormatter';
+import { WithdrawStatusType, useWithdraw } from '../hooks/useWithdraw';
 
-const displayMessageText = {
-  'non-withdrawable': 'Your overdraft limit has been exceeded.',
+const displayMessageText: Record<WithdrawStatusType, string> = {
+  'not-show': '',
+  'insufficient-withdraw-limit': 'Your overdraft limit has been exceeded.',
+  'insufficient-atm-balance': 'sorry the atm has insufficient funds.',
   overdraft: 'You go overdrawn.',
 };
 
@@ -18,37 +21,23 @@ export const WithdrawPage: React.FC = () => {
   useCheckAuth();
   const [withdrawalAmount, setWithdrawalAmount] = useState('');
   const currentBalance = useBalanceStore((state) => state.currentBalance);
-  const withdraw = useBalanceStore((state) => state.withdraw);
-  const [displayMessage, setDisplayMessage] = useState<
-    'not-show' | 'overdraft' | 'non-withdrawable'
-  >('not-show');
+
+  const { withdraw, withdrawStatus, resetWithdrawStatus } = useWithdraw();
 
   const numberInputPressHandler = (value: string) => {
-    setDisplayMessage('not-show');
-
+    resetWithdrawStatus();
     setWithdrawalAmount((prev) => prev.concat(value));
   };
 
   const clearInputPressHandler = () => {
-    setDisplayMessage('not-show');
+    resetWithdrawStatus();
     setWithdrawalAmount('');
   };
 
   const enterInputPressHandler = () => {
     const withdrawalAmountNumber = Number(withdrawalAmount);
 
-    if (withdrawalAmountNumber > currentBalance) {
-      const isOverdrawn = withdrawalAmountNumber - currentBalance <= 100;
-
-      if (isOverdrawn) {
-        withdraw(withdrawalAmountNumber);
-        setDisplayMessage('overdraft');
-      } else {
-        setDisplayMessage('non-withdrawable');
-      }
-    } else {
-      withdraw(withdrawalAmountNumber);
-    }
+    withdraw(withdrawalAmountNumber);
 
     setWithdrawalAmount('');
   };
@@ -65,15 +54,17 @@ export const WithdrawPage: React.FC = () => {
           <p className="mx-auto w-2/4 border p-4 text-center">
             {euroFormatter.format(Number(withdrawalAmount))}
           </p>
-          {displayMessage !== 'not-show' && (
+          {withdrawStatus !== 'not-show' && (
             <div
               className={twMerge(
                 'mt-4 p-2 text-center',
-                displayMessage === 'non-withdrawable' && 'bg-red-300',
-                displayMessage === 'overdraft' && 'bg-yellow-300',
+                withdrawStatus === 'insufficient-withdraw-limit' &&
+                  'bg-red-300',
+                withdrawStatus === 'insufficient-atm-balance' && 'bg-red-400',
+                withdrawStatus === 'overdraft' && 'bg-yellow-300',
               )}
             >
-              <p>{displayMessageText[displayMessage]}</p>
+              <p>{displayMessageText[withdrawStatus]}</p>
             </div>
           )}
         </div>
