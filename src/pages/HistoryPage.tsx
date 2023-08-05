@@ -6,6 +6,7 @@ import { AtmInputWrapper } from '../components/AtmInputWrapper';
 import { AtmNumberInput } from '../components/AtmNumberInput';
 import { AtmActionInput } from '../components/AtmActionInput';
 import { useTransactionStore } from '../stores/transactionStore';
+import { formatTime } from '../utils/formatTime';
 
 export const HistoryPage: React.FC = () => {
   useCheckAuth();
@@ -20,7 +21,7 @@ export const HistoryPage: React.FC = () => {
   return (
     <>
       <AtmScreenWrapper>
-        <div>Your transaction history</div>
+        <div className="mx-auto">Your transaction history</div>
         <table className="mt-4 text-left">
           <thead className="border-b">
             <tr>
@@ -28,7 +29,7 @@ export const HistoryPage: React.FC = () => {
                 scope="col"
                 className="px-6 "
               >
-                When
+                When (GMT)
               </th>
               <th
                 scope="col"
@@ -58,7 +59,7 @@ export const HistoryPage: React.FC = () => {
                   </>
                 ) : (
                   <>
-                    <td className="px-6">{transaction.when.toUTCString()}</td>
+                    <td className="px-6">{formatTime(transaction.when)}</td>
                     <td className="px-6 ">{transaction.amount}</td>
                     <td className="px-6 ">{transaction.balance}</td>
                   </>
