@@ -10,9 +10,11 @@ import { euroFormatter } from '../utils/euroFormatter';
 import { WithdrawStatusType, useWithdraw } from '../hooks/useWithdraw';
 import { useNavigate } from '@tanstack/router';
 import { UserBalance } from '../components/UserBalance';
+import { type NoteNumberType } from '../stores/noteStore';
 
 const displayMessageText: Record<WithdrawStatusType, string> = {
   'not-show': '',
+  'invalid-amount': 'Invalid amount.',
   'insufficient-withdraw-limit': 'Your overdraft limit has been exceeded.',
   'insufficient-atm-balance': 'The atm has insufficient cash.',
   overdraft: 'You go overdrawn.',
@@ -28,14 +30,20 @@ export const WithdrawPage: React.FC = () => {
 
   const { withdraw, withdrawStatus, resetWithdrawStatus } = useWithdraw();
 
+  const [receivedNote, setReceivedNote] = useState<NoteNumberType | undefined>(
+    undefined,
+  );
+
   const numberInputPressHandler = (value: string) => {
     resetWithdrawStatus();
+    setReceivedNote(undefined);
     setWithdrawalAmount((prev) => prev.concat(value));
   };
 
   const clearInputPressHandler = () => {
     resetWithdrawStatus();
     setWithdrawalAmount('');
+    setReceivedNote(undefined);
   };
 
   const cancelInputPressHandler = () => {
@@ -45,7 +53,9 @@ export const WithdrawPage: React.FC = () => {
   const enterInputPressHandler = () => {
     const withdrawalAmountNumber = Number(withdrawalAmount);
 
-    withdraw(withdrawalAmountNumber);
+    const noteUsed = withdraw(withdrawalAmountNumber);
+
+    setReceivedNote(noteUsed);
 
     setWithdrawalAmount('');
   };
@@ -53,9 +63,9 @@ export const WithdrawPage: React.FC = () => {
   return (
     <>
       <AtmScreenWrapper>
-        <div className="my-auto flex flex-col gap-4">
-          <p className="mx-auto">Withdraw Amount</p>
-          <p className="mx-auto w-2/4 border p-4 text-center">
+        <div className="my-auto flex flex-col items-center gap-4 text-center">
+          <p>Withdraw Amount</p>
+          <p className="w-2/4 border p-4 text-center">
             {euroFormatter.format(Number(withdrawalAmount))}
           </p>
           {withdrawStatus !== 'not-show' && (
@@ -68,9 +78,24 @@ export const WithdrawPage: React.FC = () => {
                 withdrawStatus === 'available-notes-not-matched' &&
                   'bg-red-400',
                 withdrawStatus === 'overdraft' && 'bg-yellow-300',
+                withdrawStatus === 'invalid-amount' && 'bg-yellow-300',
               )}
             >
               <p>{displayMessageText[withdrawStatus]}</p>
+            </div>
+          )}
+          {receivedNote && (
+            <div className="mt-4 flex flex-col content-center bg-green-100 p-2 py-4 text-center">
+              <p>You received:</p>
+              {receivedNote.fiveEuroNum > 0 && (
+                <p>{receivedNote.fiveEuroNum} of £5</p>
+              )}
+              {receivedNote.tenEuroNum > 0 && (
+                <p>{receivedNote.tenEuroNum} of £10</p>
+              )}
+              {receivedNote.twentyEuroNum > 0 && (
+                <p>{receivedNote.twentyEuroNum} of £20</p>
+              )}
             </div>
           )}
         </div>

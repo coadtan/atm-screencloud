@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { useNoteStore } from '../stores/noteStore';
+import { type NoteNumberType, useNoteStore } from '../stores/noteStore';
 import { useBalanceStore } from '../stores/balanceStore';
 import { calculateNotes } from '../utils/calculateNotes';
 
 export type WithdrawStatusType =
   | 'not-show'
+  | 'invalid-amount'
   | 'overdraft'
   | 'insufficient-withdraw-limit'
   | 'insufficient-atm-balance'
@@ -13,7 +14,7 @@ export type WithdrawStatusType =
 type UseWithdrawReturnType = {
   withdrawStatus: WithdrawStatusType;
   resetWithdrawStatus: () => void;
-  withdraw: (amount: number) => void;
+  withdraw: (amount: number) => NoteNumberType | undefined;
 };
 
 export const useWithdraw = (): UseWithdrawReturnType => {
@@ -32,7 +33,7 @@ export const useWithdraw = (): UseWithdrawReturnType => {
     setWithdrawStatus('not-show');
   };
 
-  const withdrawProcess = (amount: number) => {
+  const withdrawProcess = (amount: number): NoteNumberType | undefined => {
     const { isWithdrawalSuccessful, noteUsed } = calculateNotes(
       amount,
       noteInATM,
@@ -45,24 +46,34 @@ export const useWithdraw = (): UseWithdrawReturnType => {
 
     decreaseNoteNumber(noteUsed);
     withdrawFromATM(amount);
+
+    return noteUsed;
   };
 
-  const withdraw = (amount: number) => {
+  const withdraw = (amount: number): NoteNumberType | undefined => {
     resetWithdrawStatus();
+
+    if (amount <= 0) {
+      setWithdrawStatus('invalid-amount');
+      return;
+    }
 
     if (amount > getRemainingAtmBalance()) {
       setWithdrawStatus('insufficient-atm-balance');
+      return;
     } else if (amount > currentBalance) {
       const isOverdrawn = amount - currentBalance <= 100;
       if (isOverdrawn) {
         setWithdrawStatus('overdraft');
-        withdrawProcess(amount);
       } else {
         setWithdrawStatus('insufficient-withdraw-limit');
+        return;
       }
-    } else {
-      withdrawProcess(amount);
     }
+
+    const noteUsed = withdrawProcess(amount);
+
+    return noteUsed;
   };
 
   return {

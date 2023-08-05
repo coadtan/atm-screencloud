@@ -11,7 +11,7 @@ export const AtmScreenWrapper: React.FC<AtmScreenWrapperProps> = ({
   className,
 }) => {
   return (
-    <div className={twMerge('flex h-80 flex-col border p-2', className)}>
+    <div className={twMerge('flex h-96 flex-col border p-2', className)}>
       {children}
     </div>
   );
