@@ -9,6 +9,7 @@ import { useNavigate } from '@tanstack/router';
 import { useCheckAuth } from '../hooks/useCheckAuth';
 import { useBalanceStore } from '../stores/balanceStore';
 import { useAuthStore } from '../stores/authStore';
+import { useTransactionStore } from '../stores/transactionStore';
 
 export const LoginPage: React.FC = () => {
   useCheckAuth();
@@ -19,6 +20,7 @@ export const LoginPage: React.FC = () => {
   const navigate = useNavigate({ from: '/' });
   const initBalance = useBalanceStore((state) => state.init);
   const authenticated = useAuthStore((state) => state.authenticated);
+  const initTransaction = useTransactionStore((state) => state.initTransaction);
 
   useEffect(() => {
     if (pinValue.length >= 4) {
@@ -39,6 +41,7 @@ export const LoginPage: React.FC = () => {
     if (currentBalance) {
       authenticated();
       initBalance(currentBalance);
+      initTransaction(currentBalance);
       navigate({ to: '/atm' });
     }
   };

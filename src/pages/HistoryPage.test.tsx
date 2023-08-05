@@ -9,9 +9,9 @@ describe(HistoryPage, () => {
     vi.restoreAllMocks();
   });
 
-  test('should display HistoryPage', () => {
+  test('should display "Your transaction history"', () => {
     const view = render(<HistoryPage />);
 
-    expect(view.getByText(/HistoryPage/i)).toBeDefined();
+    expect(view.getByText(/Your transaction history/i)).toBeDefined();
   });
 });
