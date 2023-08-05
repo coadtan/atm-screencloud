@@ -6,10 +6,10 @@ import { AtmInputWrapper } from '../components/AtmInputWrapper';
 import { AtmNumberInput } from '../components/AtmNumberInput';
 import { AtmActionInput } from '../components/AtmActionInput';
 import { useCheckAuth } from '../hooks/useCheckAuth';
-import { useBalanceStore } from '../stores/balanceStore';
 import { euroFormatter } from '../utils/euroFormatter';
 import { WithdrawStatusType, useWithdraw } from '../hooks/useWithdraw';
 import { useNavigate } from '@tanstack/router';
+import { UserBalance } from '../components/UserBalance';
 
 const displayMessageText: Record<WithdrawStatusType, string> = {
   'not-show': '',
@@ -25,7 +25,6 @@ export const WithdrawPage: React.FC = () => {
   const navigate = useNavigate();
 
   const [withdrawalAmount, setWithdrawalAmount] = useState('');
-  const currentBalance = useBalanceStore((state) => state.currentBalance);
 
   const { withdraw, withdrawStatus, resetWithdrawStatus } = useWithdraw();
 
@@ -56,7 +55,7 @@ export const WithdrawPage: React.FC = () => {
       <AtmScreenWrapper>
         <div>WithdrawPage</div>
         <div>
-          <p>your balance: {currentBalance}</p>
+          <UserBalance />
         </div>
         <div className="flex flex-col gap-4">
           <p className="mx-auto">Amount</p>
