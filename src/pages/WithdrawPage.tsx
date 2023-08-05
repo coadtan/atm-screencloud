@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
+
 import { AtmScreenWrapper } from '../components/AtmScreenWrapper';
 import { AtmInputWrapper } from '../components/AtmInputWrapper';
 import { AtmNumberInput } from '../components/AtmNumberInput';
 import { AtmActionInput } from '../components/AtmActionInput';
 import { useCheckAuth } from '../hooks/useCheckAuth';
 import { useBalanceStore } from '../stores/balanceStore';
+import { euroFormatter } from '../utils/euroFormatter';
+
+const displayMessageText = {
+  'non-withdrawable': 'Your overdraft limit has been exceeded.',
+  overdraft: 'You go overdrawn.',
+};
 
 export const WithdrawPage: React.FC = () => {
   useCheckAuth();
@@ -22,6 +30,7 @@ export const WithdrawPage: React.FC = () => {
   };
 
   const clearInputPressHandler = () => {
+    setDisplayMessage('not-show');
     setWithdrawalAmount('');
   };
 
@@ -44,12 +53,6 @@ export const WithdrawPage: React.FC = () => {
     setWithdrawalAmount('');
   };
 
-  const formatter = new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency: 'GBP',
-    minimumFractionDigits: 0,
-  });
-
   return (
     <>
       <AtmScreenWrapper>
@@ -60,18 +63,19 @@ export const WithdrawPage: React.FC = () => {
         <div className="flex flex-col gap-4">
           <p className="mx-auto">Amount</p>
           <p className="mx-auto w-2/4 border p-4 text-center">
-            {formatter.format(Number(withdrawalAmount))}
+            {euroFormatter.format(Number(withdrawalAmount))}
           </p>
-          {displayMessage === 'non-withdrawable' ? (
-            <div className="mt-4 bg-red-300 p-2 text-center">
-              <p>Your overdraft limit has been exceeded.</p>
+          {displayMessage !== 'not-show' && (
+            <div
+              className={twMerge(
+                'mt-4 p-2 text-center',
+                displayMessage === 'non-withdrawable' && 'bg-red-300',
+                displayMessage === 'overdraft' && 'bg-yellow-300',
+              )}
+            >
+              <p>{displayMessageText[displayMessage]}</p>
             </div>
-          ) : null}
-          {displayMessage === 'overdraft' ? (
-            <div className="mt-4 bg-yellow-300 p-2 text-center">
-              <p>You go overdrawn.</p>
-            </div>
-          ) : null}
+          )}
         </div>
       </AtmScreenWrapper>
       <AtmInputWrapper>
