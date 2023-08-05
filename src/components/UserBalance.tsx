@@ -10,7 +10,9 @@ export const UserBalance: React.FC = () => {
       <p>
         Your balance: {euroFormatter.format(Number(currentBalance))}{' '}
         {currentBalance < 0 && (
-          <span className="bg-yellow-300 text-sm italic">overdrawn</span>
+          <span className="rounded bg-yellow-300 px-1 text-sm italic">
+            overdrawn
+          </span>
         )}
       </p>
     </div>

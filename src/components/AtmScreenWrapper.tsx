@@ -1,11 +1,18 @@
 import React, { type ReactElement } from 'react';
+import { twMerge, type ClassNameValue } from 'tailwind-merge';
 
 type AtmScreenWrapperProps = {
   children: ReactElement | ReactElement[];
+  className?: ClassNameValue;
 };
 
 export const AtmScreenWrapper: React.FC<AtmScreenWrapperProps> = ({
   children,
+  className,
 }) => {
-  return <div className="h-80 border p-2">{children}</div>;
+  return (
+    <div className={twMerge('flex h-80 flex-col border p-2', className)}>
+      {children}
+    </div>
+  );
 };

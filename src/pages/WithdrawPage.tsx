@@ -53,12 +53,8 @@ export const WithdrawPage: React.FC = () => {
   return (
     <>
       <AtmScreenWrapper>
-        <div>WithdrawPage</div>
-        <div>
-          <UserBalance />
-        </div>
-        <div className="flex flex-col gap-4">
-          <p className="mx-auto">Amount</p>
+        <div className="my-auto flex flex-col gap-4">
+          <p className="mx-auto">Withdraw Amount</p>
           <p className="mx-auto w-2/4 border p-4 text-center">
             {euroFormatter.format(Number(withdrawalAmount))}
           </p>
@@ -77,6 +73,9 @@ export const WithdrawPage: React.FC = () => {
               <p>{displayMessageText[withdrawStatus]}</p>
             </div>
           )}
+        </div>
+        <div className="mt-auto text-center">
+          <UserBalance />
         </div>
       </AtmScreenWrapper>
       <AtmInputWrapper>

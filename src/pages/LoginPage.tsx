@@ -51,8 +51,7 @@ export const LoginPage: React.FC = () => {
   return (
     <>
       <AtmScreenWrapper>
-        <div>
-          <div>Welcome to ABC Bank</div>
+        <div className="my-auto flex flex-col items-center gap-2 p-4">
           <div>Enter Your Pin</div>
           <div className="flex flex-row gap-4">
             <PinInput
@@ -68,7 +67,6 @@ export const LoginPage: React.FC = () => {
               <PinInputField readOnly />
             </PinInput>
           </div>
-
           {pinCheckState === 'error' ? (
             <div className="mt-4 bg-red-300 p-2">Incorrect PIN.</div>
           ) : null}

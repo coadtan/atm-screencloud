@@ -9,9 +9,9 @@ describe(WithdrawPage, () => {
     vi.restoreAllMocks();
   });
 
-  test('should display Withdraw', () => {
+  test('should display Withdraw Amount', () => {
     const view = render(<WithdrawPage />);
 
-    expect(view.getByText(/Withdraw/i)).toBeDefined();
+    expect(view.getByText(/Withdraw Amount/i)).toBeDefined();
   });
 });

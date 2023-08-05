@@ -8,6 +8,7 @@ import { Button } from '@chakra-ui/react';
 import { useNavigate } from '@tanstack/router';
 import { useResetScenario } from '../hooks/useResetScenario';
 import { UserBalance } from '../components/UserBalance';
+import { IconCashBanknote, IconHistory } from '@tabler/icons-react';
 
 export const AtmPage: React.FC = () => {
   useCheckAuth();
@@ -27,14 +28,24 @@ export const AtmPage: React.FC = () => {
   return (
     <>
       <AtmScreenWrapper>
-        <div>ATMPage</div>
-        <div className="mt-8 flex flex-row">
-          <div className="w-3/4">
+        <div className="mt-16 flex flex-col items-center gap-8">
+          <div className="border p-4 text-center shadow-sm">
             <UserBalance />
           </div>
-          <div className="flex w-1/4 flex-col gap-8">
-            <Button onClick={goToWithDraw}>Withdraw</Button>
-            <Button>History</Button>
+          <div className="flex gap-8">
+            <Button
+              colorScheme="green"
+              leftIcon={<IconCashBanknote />}
+              onClick={goToWithDraw}
+            >
+              Withdraw
+            </Button>
+            <Button
+              leftIcon={<IconHistory />}
+              variant={'outline'}
+            >
+              History
+            </Button>
           </div>
         </div>
       </AtmScreenWrapper>

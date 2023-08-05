@@ -10,9 +10,15 @@ describe(AtmPage, () => {
     vi.restoreAllMocks();
   });
 
-  test('should display AtmPage', () => {
+  test('should display Withdraw', () => {
     const view = render(<AtmPage />);
 
-    expect(view.getByText(/AtmPage/i)).toBeDefined();
+    expect(view.getByText(/Withdraw/i)).toBeDefined();
+  });
+
+  test('should display History', () => {
+    const view = render(<AtmPage />);
+
+    expect(view.getByText(/History/i)).toBeDefined();
   });
 });
