@@ -9,6 +9,7 @@ import { useCheckAuth } from '../hooks/useCheckAuth';
 import { useBalanceStore } from '../stores/balanceStore';
 import { euroFormatter } from '../utils/euroFormatter';
 import { WithdrawStatusType, useWithdraw } from '../hooks/useWithdraw';
+import { useNavigate } from '@tanstack/router';
 
 const displayMessageText: Record<WithdrawStatusType, string> = {
   'not-show': '',
@@ -21,6 +22,7 @@ const displayMessageText: Record<WithdrawStatusType, string> = {
 
 export const WithdrawPage: React.FC = () => {
   useCheckAuth();
+  const navigate = useNavigate();
 
   const [withdrawalAmount, setWithdrawalAmount] = useState('');
   const currentBalance = useBalanceStore((state) => state.currentBalance);
@@ -35,6 +37,10 @@ export const WithdrawPage: React.FC = () => {
   const clearInputPressHandler = () => {
     resetWithdrawStatus();
     setWithdrawalAmount('');
+  };
+
+  const cancelInputPressHandler = () => {
+    navigate({ to: '/atm' });
   };
 
   const enterInputPressHandler = () => {
@@ -79,6 +85,7 @@ export const WithdrawPage: React.FC = () => {
         <AtmActionInput
           onClearPress={clearInputPressHandler}
           onEnterPress={enterInputPressHandler}
+          onCancelPress={cancelInputPressHandler}
         />
       </AtmInputWrapper>
     </>
