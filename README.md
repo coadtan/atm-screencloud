@@ -18,6 +18,10 @@ Quick Demo: [atm.coadtan.dev](https://atm.coadtan.dev/)
 - [TailwindCSS](https://tailwindcss.com/) for inline styling
 - Icons from [tabler](https://tabler-icons.io/)
 
+## Features
+
+for the list of features and user guideline, please refer to [docs/Features.md](./docs/Features.md)
+
 ## Development
 
 > Please install and setup Node before processing to the next step.
@@ -86,7 +90,3 @@ npm run test:coverage
 ## Deployment
 
 This project is deployed on [Vercel](https://vercel.com/). The deployment is configured to be triggered on each push to the `main` branch.
-
-## Features
-
-for the list of features, please refer to [features.md](./features.md)
