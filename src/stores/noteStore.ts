@@ -8,7 +8,7 @@ type NoteNumberType = {
 
 interface NoteState {
   noteNumber: NoteNumberType;
-  reset: () => void;
+  resetNotes: () => void;
   updateNoteNumber: (newNoteNumber: NoteNumberType) => void;
   getRemainingAtmBalance: () => number;
 }
@@ -21,7 +21,7 @@ const initialState: NoteNumberType = {
 
 export const useNoteStore = create<NoteState>()((set, get) => ({
   noteNumber: initialState,
-  reset: () =>
+  resetNotes: () =>
     set(() => ({
       noteNumber: initialState,
     })),
