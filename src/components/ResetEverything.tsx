@@ -20,7 +20,7 @@ export const ResetEverything: React.FC = () => {
 
   return (
     <>
-      <Tooltip label="This is for convenience so we do not need to remove local storage and change URL manually">
+      <Tooltip label="This is for convenience to go reset everything like user auth state and ATM's remaining notes">
         <Button
           colorScheme="gray"
           onClick={resetHandler}
