@@ -2,7 +2,6 @@ import { render } from '@testing-library/react';
 import { WithdrawPage } from './WithdrawPage';
 
 vi.mock('../hooks/useCheckAuth');
-vi.mock('@tanstack/router');
 
 describe(WithdrawPage, () => {
   test('should display Withdraw Amount', () => {
