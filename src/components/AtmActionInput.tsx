@@ -5,6 +5,8 @@ type AtmActionInputProps = {
   onClearPress?: () => void;
   onCancelPress?: () => void;
   hideCancel?: boolean;
+  hideClear?: boolean;
+  hideEnter?: boolean;
   enterLoading?: boolean;
 };
 
@@ -13,6 +15,8 @@ export const AtmActionInput: React.FC<AtmActionInputProps> = ({
   onClearPress,
   onCancelPress,
   hideCancel = false,
+  hideClear = false,
+  hideEnter = false,
   enterLoading = false,
 }) => {
   const enterButtonPressedHandler = () => {
@@ -49,21 +53,35 @@ export const AtmActionInput: React.FC<AtmActionInputProps> = ({
           CANCEL
         </Button>
       )}
-      <Button
-        colorScheme="yellow"
-        onClick={clearButtonPressedHandler}
-        size={'lg'}
-      >
-        CLEAR
-      </Button>
-      <Button
-        colorScheme="green"
-        onClick={enterButtonPressedHandler}
-        size={'lg'}
-        isLoading={enterLoading}
-      >
-        ENTER
-      </Button>
+      {hideClear ? (
+        <Button
+          isDisabled={true}
+          size={'lg'}
+        ></Button>
+      ) : (
+        <Button
+          colorScheme="yellow"
+          onClick={clearButtonPressedHandler}
+          size={'lg'}
+        >
+          CLEAR
+        </Button>
+      )}
+      {hideEnter ? (
+        <Button
+          isDisabled={true}
+          size={'lg'}
+        ></Button>
+      ) : (
+        <Button
+          colorScheme="green"
+          onClick={enterButtonPressedHandler}
+          size={'lg'}
+          isLoading={enterLoading}
+        >
+          ENTER
+        </Button>
+      )}
       <Button
         isDisabled={true}
         size={'lg'}

@@ -39,8 +39,15 @@ export const AtmPage: React.FC = () => {
         </div>
       </AtmScreenWrapper>
       <AtmInputWrapper>
-        <AtmNumberInput onNumberInputPress={inputPressHandler} />
-        <AtmActionInput onCancelPress={cancelInputPressHandler} />
+        <AtmNumberInput
+          onNumberInputPress={inputPressHandler}
+          isDisabled
+        />
+        <AtmActionInput
+          onCancelPress={cancelInputPressHandler}
+          hideClear
+          hideEnter
+        />
       </AtmInputWrapper>
     </>
   );

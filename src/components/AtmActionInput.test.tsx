@@ -58,5 +58,29 @@ describe(AtmActionInput, () => {
 
       expect(view.queryByText(/Loading/i)).toBeNull();
     });
+
+    test('should hide clear button when "hideClear" props is true', () => {
+      const view = render(<AtmActionInput hideClear={true} />);
+
+      expect(view.queryByText(/CLEAR/i)).toBeNull();
+    });
+
+    test('should display clear button when "hideClear" props is false', () => {
+      const view = render(<AtmActionInput hideClear={false} />);
+
+      expect(view.findByText(/CLEAR/i)).toBeDefined();
+    });
+
+    test('should hide enter button when "hideEnter" props is true', () => {
+      const view = render(<AtmActionInput hideEnter={true} />);
+
+      expect(view.queryByText(/ENTER/i)).toBeNull();
+    });
+
+    test('should display enter button when "hideEnter" props is false', () => {
+      const view = render(<AtmActionInput hideEnter={false} />);
+
+      expect(view.findByText(/ENTER/i)).toBeDefined();
+    });
   });
 });
