@@ -42,6 +42,10 @@ export const calculateNotes = (
       remainingNoteInATM.fiveEuroNum -= 1;
       remaining -= 5;
     }
+
+    if (remaining < 0) {
+      break;
+    }
   }
 
   if (remaining != 0) {
