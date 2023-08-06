@@ -63,6 +63,69 @@ describe(LoginPage, () => {
     expect(view.getByText(/Incorrect Pin/i)).toBeDefined();
   });
 
+  test('should disable number input if pin length is 4', async () => {
+    const user = userEvent.setup();
+
+    const view = render(<LoginPage />);
+
+    const oneButton = view.getByRole('button', { name: /1/i });
+
+    await user.click(oneButton);
+    await user.click(oneButton);
+    await user.click(oneButton);
+    await user.click(oneButton);
+
+    const numberButtons = view.getAllByRole('button', { name: /[0-9]/ });
+
+    numberButtons.forEach((button) => {
+      expect(button).toBeDisabled();
+    });
+  });
+
+  test('should disable number input if pin length is more than 4', async () => {
+    const user = userEvent.setup();
+
+    const view = render(<LoginPage />);
+
+    const oneButton = view.getByRole('button', { name: /1/i });
+
+    await user.click(oneButton);
+    await user.click(oneButton);
+    await user.click(oneButton);
+    await user.click(oneButton);
+    await user.click(oneButton);
+
+    const numberButtons = view.getAllByRole('button', { name: /[0-9]/ });
+
+    numberButtons.forEach((button) => {
+      expect(button).toBeDisabled();
+    });
+  });
+
+  test('should clear pin fields when click "CLEAR"', async () => {
+    const user = userEvent.setup();
+
+    const view = render(<LoginPage />);
+
+    const oneButton = view.getByRole('button', { name: /1/i });
+
+    await user.click(oneButton);
+    await user.click(oneButton);
+    await user.click(oneButton);
+    await user.click(oneButton);
+
+    const clearButton = view.getByRole('button', { name: /CLEAR/i });
+
+    await user.click(clearButton);
+
+    const pinInput = view.getAllByPlaceholderText(/○/i);
+
+    expect(pinInput[0]).toHaveValue('');
+    expect(pinInput[1]).toHaveValue('');
+    expect(pinInput[2]).toHaveValue('');
+    expect(pinInput[3]).toHaveValue('');
+  });
+
   describe('Login success', () => {
     const balanceFromAPI = 220;
 
