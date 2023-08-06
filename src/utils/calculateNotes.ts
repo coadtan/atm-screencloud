@@ -20,7 +20,7 @@ export const calculateNotes = (
   const totalNoteInATM =
     noteInATM.fiveEuroNum + noteInATM.tenEuroNum + noteInATM.twentyEuroNum;
 
-  const remainingNoteInATM: NoteNumberType = structuredClone(noteInATM);
+  const remainingNoteInATM: NoteNumberType = { ...noteInATM };
 
   for (let i = 0; i <= totalNoteInATM; i++) {
     if (remaining >= 20 && remainingNoteInATM.twentyEuroNum > 0) {
