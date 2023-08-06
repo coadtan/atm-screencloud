@@ -1,4 +1,4 @@
-import { NoteNumberType } from '../stores/noteStore';
+import type { NoteNumberType } from '../stores/noteStore';
 
 type CalculateNotesReturnType = {
   isWithdrawalSuccessful: boolean;
