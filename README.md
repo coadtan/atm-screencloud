@@ -26,6 +26,7 @@ for the list of features and user guideline, please refer to [docs/Features.md](
 
 > Please install and setup Node before processing to the next step.
 > If you have not done so, consider using [nvm](https://github.com/nvm-sh/nvm).
+> This project is developed with Node v18.15.0
 
 1. Cloned the repo then navigate to the project root directory and run
 
