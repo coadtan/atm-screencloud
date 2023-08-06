@@ -20,13 +20,17 @@ Quick Demo: [atm.coadtan.dev](https://atm.coadtan.dev/)
 
 ## Features
 
-for the list of features and user guideline, please refer to [docs/Features.md](./docs/Features.md)
+For the list of features and user guideline, please refer to [docs/Features.md](./docs/Features.md)
 
 ## Development
 
-> Please install and setup Node before processing to the next step.
-> If you have not done so, consider using [nvm](https://github.com/nvm-sh/nvm).
-> This project is developed with Node v18.15.0
+### Pre-requisites
+
+1. Install and setup Node. Consider using [nvm](https://github.com/nvm-sh/nvm).
+
+2. This project is developed with Node v18.15.0
+
+### Getting Started
 
 1. Cloned the repo then navigate to the project root directory and run
 
@@ -40,7 +44,7 @@ npm install
 npm run dev
 ```
 
-3. You should be able to access the web application on your favorite web-browser through the link below. Port 5173 could be used by some other application on your machine. So, feel free to change it to any available port.
+3. You should be able to access the web application on your favorite web-browser through the link below. The default port is `5173` but it could be used by some other application on your machine. So, feel free to change the port according to the one showing on your terminal.
 
 ```bash
 http://127.0.0.1:5173/
@@ -87,6 +91,8 @@ For coverage
 ```bash
 npm run test:coverage
 ```
+
+Once the coverage is generated, you can find the coverage report in `coverage/index.html`
 
 ## Deployment
 

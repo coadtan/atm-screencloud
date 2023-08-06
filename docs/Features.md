@@ -53,14 +53,25 @@ Notice that your current balance is now `30`.
 
 <img src="./features-images/withdraw-90-overdrawn.png" width="300">
 
-Notice that you will get an error message `You go overdrawn.` if you enter the amount that is more than your current balance.
+Notice that you will get a warning message `You go overdrawn.` if you enter the amount that is more than your current balance.
 
 Your current balance is now `-60` with the overdrawn state.
 
 At this point, you can play around with the ATM Simulator. Try to withdraw different amounts and see what happens. Here are some examples.
 
-- Withdraw more than the ATM remaining balance.
-- Withdraw more than your current balance plus your overdrawn limit (£100).
+- Withdraw more than the ATM remaining balance. You should see "The atm has insufficient cash." error message.
+
+<img src="./features-images/insufficient-cash-error.png" width="300">
+
+- Withdraw the amount that the ATM does not have notes for. You should see "Cannot withdraw the exact amount with available notes." error message.
+
+<img src="./features-images/no-available-note-error.png" width="300">
+
+- Withdraw more than your current balance plus your overdrawn limit (£100). You should see "Your overdraft limit has been exceeded." error message.
+
+<img src="./features-images/overdraft-limit-exceeded.png" width="300">
+
+> Note that for overdraft limit exceed scenario you might need to modify your starting current balance or initial notes in the ATM to be grater than £320.
 
 7. Let's go back to the previous screen by clicking `CANCEL`
 
